@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
-from flask_jwt import JWT
+from flask_jwt import JWT, jwt_required
 
 from security import authenticate, identity
 
@@ -13,6 +13,7 @@ jwt = JWT(app, authenticate, identity)
 items = []
 
 class Item(Resource):
+    @jwt_required()
     def get(self, name):
         item = next(filter(lumbda x: x['name'] == name, items), None)
         return {'item':item}, 200 if item else 404
