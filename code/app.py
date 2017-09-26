@@ -15,12 +15,12 @@ items = []
 class Item(Resource):
     @jwt_required()
     def get(self, name):
-        item = next(filter(lumbda x: x['name'] == name, items), None)
+        item = next(filter(lambda x: x['name'] == name, items), None)
         return {'item':item}, 200 if item else 404
 
     def post(self, name):
-        if next(filter(lumbda x: x['name'] == name, items), None):
-            return {'message':'An item with name '{}' already exists.'.format(name)}, 400
+        if next(filter(lambda x: x['name'] == name, items), None):
+            return {'message':'An item with name "{}" already exists.'.format(name)}, 400
 
         data = request.get_json()
         item = {'name':name, 'price':data['price']}
@@ -29,4 +29,4 @@ class Item(Resource):
 
 api.add_resource(Item, '/item/<string:name>')
 
-app.run(port=5000)
+app.run(port=5000, debug=True)
