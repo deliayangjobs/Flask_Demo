@@ -40,7 +40,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/deliay/Documents/development/ForFlask/Flask_Demo/venv"
+VIRTUAL_ENV="/Users/delia/Documents/development/Flask/Flask_Demo/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
