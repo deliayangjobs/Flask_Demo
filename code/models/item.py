@@ -1,6 +1,12 @@
 import sqlite3
+from db import db
 
-class ItemModel:
+class ItemModel(db.Model):
+    __tablename__ = 'items'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80))
+    price = db.Column(db.Float(precision=2))
+
     def __init__(self, name, price):
         self.name = name
         self.price = price
@@ -8,35 +14,14 @@ class ItemModel:
     def json(self):
         return {'name':self.name, 'price':self.price}
 
-    def insert(self):
-        conn = sqlite3.connect('data.db')
-        cursor = conn.cursor()
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
 
-        query = "INSERT INTO items VALUES (Null, ?, ?)"
-        cursor.execute(query, (self.name, self.price))
-
-        conn.commit()
-        conn.close()
-
-    def update(self):
-        conn = sqlite3.connect('data.db')
-        cursor = conn.cursor()
-
-        query = "UPDATE items SET price=? WHERE name=?"
-        cursor.execute(query, (self.price, self.name))
-
-        conn.commit()
-        conn.close()
+    def delete_from_db(self):
+        db.session.delete(self)
+        db.session.commit()
 
     @classmethod
     def find_by_name(cls, name):
-        conn = sqlite3.connect('data.db')
-        cursor = conn.cursor()
-
-        query = "SELECT * FROM items WHERE name=?"
-        result = cursor.execute(query, (name,))
-        row = result.fetchone()
-        conn.close()
-
-        if row:
-            return cls(row[1], row[2])
+        return ItemModel.query.filter_by(name=name).first()
