@@ -1,4 +1,3 @@
-import sqlite3
 from flask_restful import Resource, reqparse
 from flask_jwt import jwt_required
 from models.item import ItemModel
@@ -10,6 +9,12 @@ class Item(Resource):
         type=float,
         required=True,
         help="This field cannot be left blank"
+    )
+
+    parser.add_argument('store_id',
+        type=int,
+        required=True,
+        help="Every item needs a store id."
     )
 
     @jwt_required()
@@ -25,7 +30,8 @@ class Item(Resource):
 
         data = Item.parser.parse_args()
         # data = request.get_json()
-        item = ItemModel(name, data['price'])
+        # item = ItemModel(name, data['price'], data['store_id'])
+        item = ItemModel(name, **data)
 
         try:
             item.save_to_db()
@@ -52,7 +58,7 @@ class Item(Resource):
                 # ItemModel.insert(new_item)
             # except:
                 # return {"message":"An error occurred inserting the item."}, 500
-            item = ItemModel(name, data['price'])
+            item = ItemModel(name, **data)
         else:
             # try:
             #     new_item.update() #little weird here, but this is the itemModel with new price
@@ -68,14 +74,5 @@ class Item(Resource):
 
 class ItemList(Resource):
     def get(self):
-        conn = sqlite3.connect('data.db')
-        cursor = conn.cursor()
-
-        query = "SELECT * FROM items"
-        result = cursor.execute(query)
-        items = []
-        for row in result:
-            items.append(ItemModel(row[1], row[2]).json())
-
-        conn.close()
-        return {'items':items}
+        return {'items': [item.json() for item in ItemModel.query.all()]}
+        # return {'items': list(map(lambda x: x.json(), ItemModel.query.all()))}
