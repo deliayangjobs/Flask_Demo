@@ -1,2 +1,3 @@
-# Flask_Demo
-This is a demo for Flask/REST APIs/Python.
+# Flask Tricks
+Flask & Python & SQLAlchemy
+User(JWT) & Store & Item
