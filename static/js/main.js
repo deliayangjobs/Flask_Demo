@@ -1,9 +1,10 @@
-var Song = Backbone.Model.extend({
-    validate: function(attrs){
-        if(!attrs.title){
-            return "Title is required";
-        }
+require.config({
+    paths:{
+        jquery:'lib/jquery-min',
+        underscore:'lib/underscore-min',
+        backbone:'lib/backbone-min'
     }
 });
-
-var song = new Song();
+define(['app'], function(App){
+    App.initialize();
+});
