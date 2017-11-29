@@ -16,11 +16,11 @@ class Playlist(Resource):
     )
 
     # @jwt_required()
-    # def get(self, name):
-    #     item = ItemModel.find_by_name(name)
-    #     if item:
-    #         return item.json()
-    #     return {'message':'Item not found'}, 404
+    def get(self, playlist_id):
+        playlist = PlaylistModel.find_by_id(playlist_id)
+        if playlist:
+            return playlist.json()
+        return {'message':'Playlist not found'}, 404
 
     def post(self, playlist_id):
         # if ItemModel.find_by_name(name):
