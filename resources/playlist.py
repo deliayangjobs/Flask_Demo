@@ -38,3 +38,10 @@ class Playlist(Resource):
             return {"message":"An error occurred inserting the playlist."}, 500
 
         return playlist.json(), 201
+
+    def delete(self, playlist_id):
+        playlist = PlaylistModel.find_by_id(playlist_id)
+        if playlist:
+            playlist.delete_from_db()
+
+        return {'message':'Playlist deleted'}
