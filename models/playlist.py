@@ -7,7 +7,7 @@ class PlaylistModel(db.Model):
     name = db.Column(db.String(80))
     description = db.Column(db.String(4000))
 
-    def __init__(self, playlist_id, options):
+    def __init__(self, options):
         self.name = options.name
         self.description = options.description
 
@@ -22,9 +22,9 @@ class PlaylistModel(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    # @classmethod
-    # def find_by_name(cls, name):
-    #     return cls.query.filter_by(name=name).first()
+    @classmethod
+    def find_by_name(cls, name):
+        return cls.query.filter_by(name=name).first()
 
     @classmethod
     def find_by_id(cls, playlist_id):

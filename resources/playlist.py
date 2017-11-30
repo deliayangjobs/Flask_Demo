@@ -22,15 +22,12 @@ class Playlist(Resource):
             return playlist.json()
         return {'message':'Playlist not found'}, 404
 
-    def post(self, playlist_id):
-        # if ItemModel.find_by_name(name):
-        #     return {'message':'An item with name "{}" already exists.'.format(name)}, 400
-
+    def post(self):
         data = Playlist.parser.parse_args()
-        # data = request.get_json()
-        # item = ItemModel(name, data['price'], data['store_id'])
-        # track = TrackModel(track_id, **data)
-        playlist = PlaylistModel(playlist_id, data)
+        if PlaylistModel.find_by_name(data.name):
+            return {'message':'An playlist with name "{}" already exists.'.format(data.name)}, 400
+
+        playlist = PlaylistModel(data)
 
         try:
             playlist.save_to_db()
