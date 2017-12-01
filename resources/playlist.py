@@ -22,6 +22,7 @@ class Playlist(Resource):
             return playlist.json()
         return {'message':'Playlist not found'}, 404
 
+
     def post(self):
         data = Playlist.parser.parse_args()
         if PlaylistModel.find_by_name(data.name):
@@ -36,9 +37,25 @@ class Playlist(Resource):
 
         return playlist.json(), 201
 
+
     def delete(self, playlist_id):
         playlist = PlaylistModel.find_by_id(playlist_id)
         if playlist:
             playlist.delete_from_db()
 
         return {'message':'Playlist deleted'}
+
+
+    def put(self, playlist_id):
+        data = Playlist.parser.parse_args()
+        playlist = PlaylistModel.find_by_id(playlist_id)
+
+        if playlist is None:
+            playlist = PlaylistModel(data)
+        else:
+            playlist.name = data['name']
+            playlist.description = data['description']
+
+        playlist.save_to_db()
+
+        return playlist.json(), 201
