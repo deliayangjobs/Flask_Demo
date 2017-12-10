@@ -10,6 +10,7 @@ from resources.item import Item, ItemList
 from resources.store import Store, StoreList
 from resources.track import Track
 from resources.playlist import Playlist, Playlists
+from resources.source import Source, Sources
 
 app = Flask(__name__, template_folder='./views/templates')
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
@@ -31,6 +32,9 @@ api.add_resource(Track, '/track', '/track/<int:track_id>')
 
 api.add_resource(Playlist, '/playlist', '/playlist/<int:playlist_id>')
 api.add_resource(Playlists, '/playlists')
+
+api.add_resource(Source, '/source', '/source/<int:source_id>')
+api.add_resource(Sources, '/sources')
 
 api.add_resource(ItemList, '/items')
 api.add_resource(StoreList, '/stores')

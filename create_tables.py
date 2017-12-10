@@ -16,6 +16,12 @@ default_value = "INSERT INTO playlists VALUES (Null, 'My Favorate', 'This is a d
 cursor.execute(default_value)
 # cursor.execute("INSERT INTO items VALUES (Null, 'test', 10.99)")
 
+#sources table
+create_table = "CREATE TABLE IF NOT EXISTS sources (id INTEGER PRIMARY KEY, name text, url text)"
+cursor.execute(create_table)
+default_value = "INSERT INTO sources VALUES (Null, 'Netflix', 'http://www.netflix.com')"
+cursor.execute(default_value)
+
 #tracks table
 create_table = "CREATE TABLE IF NOT EXISTS tracks ( \
     id INTEGER PRIMARY KEY, \
