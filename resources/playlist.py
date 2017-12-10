@@ -22,7 +22,7 @@ class Playlist(Resource):
             return playlist.json()
         return {'message':'Playlist not found'}, 404
 
-
+    # @jwt_required()
     def post(self):
         data = Playlist.parser.parse_args()
         if PlaylistModel.find_by_name(data.name):
@@ -37,7 +37,7 @@ class Playlist(Resource):
 
         return playlist.json(), 201
 
-
+    # @jwt_required()
     def delete(self, playlist_id):
         playlist = PlaylistModel.find_by_id(playlist_id)
         if playlist:
@@ -45,7 +45,7 @@ class Playlist(Resource):
 
         return {'message':'Playlist deleted'}
 
-
+    # @jwt_required()
     def put(self, playlist_id):
         data = Playlist.parser.parse_args()
         playlist = PlaylistModel.find_by_id(playlist_id)
@@ -59,3 +59,9 @@ class Playlist(Resource):
         playlist.save_to_db()
 
         return playlist.json(), 201
+
+
+class Playlists(Resource):
+    # @jwt_required()
+    def get(self):
+        return {'playlists': [playlist.json() for playlist in PlaylistModel.query.all()]}
