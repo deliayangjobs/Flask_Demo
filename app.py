@@ -27,7 +27,7 @@ jwt = JWT(app, authenticate, identity)
 api.add_resource(Store, '/store/<string:name>')
 api.add_resource(Item, '/item/<string:name>')
 
-api.add_resource(Track, '/track/<int:track_id>')
+api.add_resource(Track, '/track', '/track/<int:track_id>')
 
 api.add_resource(Playlist, '/playlist', '/playlist/<int:playlist_id>')
 api.add_resource(Playlists, '/playlists')

@@ -16,6 +16,9 @@ class Track(Resource):
     parser.add_argument('episode',
         type=int
     )
+    parser.add_argument('playlist_id',
+        type=int
+    )
     # parser.add_argument('store_id',
     #     type=int,
     #     required=True,
@@ -29,20 +32,17 @@ class Track(Resource):
     #         return item.json()
     #     return {'message':'Item not found'}, 404
 
-    def post(self, track_id):
-        # if ItemModel.find_by_name(name):
-        #     return {'message':'An item with name "{}" already exists.'.format(name)}, 400
-
+    def post(self):
         data = Track.parser.parse_args()
-        # data = request.get_json()
-        # item = ItemModel(name, data['price'], data['store_id'])
-        # track = TrackModel(track_id, **data)
-        track = TrackModel(track_id, data)
+        if TrackModel.find_by_name(data.name):
+            return {'message':'An track with name "{}" already exists.'.format(data.name)}, 400
+
+        track = TrackModel(data)
 
         try:
             track.save_to_db()
         except:
-            return {"message":"An error occurred inserting the item."}, 500
+            return {"message":"An error occurred inserting the track."}, 500
 
         return track.json(), 201
     #
