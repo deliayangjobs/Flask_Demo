@@ -8,7 +8,7 @@ from security import authenticate, identity
 from resources.user import UserRegister
 from resources.item import Item, ItemList
 from resources.store import Store, StoreList
-from resources.track import Track
+from resources.track import Track, Tracks
 from resources.playlist import Playlist, Playlists
 from resources.source import Source, Sources
 
@@ -29,6 +29,7 @@ api.add_resource(Store, '/store/<string:name>')
 api.add_resource(Item, '/item/<string:name>')
 
 api.add_resource(Track, '/track', '/track/<int:track_id>')
+api.add_resource(Tracks, '/tracks')
 
 api.add_resource(Playlist, '/playlist', '/playlist/<int:playlist_id>')
 api.add_resource(Playlists, '/playlists')

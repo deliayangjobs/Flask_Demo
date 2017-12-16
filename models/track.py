@@ -42,3 +42,7 @@ class TrackModel(db.Model):
     @classmethod
     def find_by_name(cls, name):
         return cls.query.filter_by(name=name).first()
+
+    @classmethod
+    def find_by_id(cls, track_id):
+        return cls.query.filter_by(id=track_id).first()

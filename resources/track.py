@@ -22,13 +22,13 @@ class Track(Resource):
     parser.add_argument('source_id',
         type=int
     )
-    #
+
     # @jwt_required()
-    # def get(self, name):
-    #     item = ItemModel.find_by_name(name)
-    #     if item:
-    #         return item.json()
-    #     return {'message':'Item not found'}, 404
+    def get(self, track_id):
+        track = TrackModel.find_by_id(track_id)
+        if track:
+            return track.json()
+        return {'message':'Source not found'}, 404
 
     def post(self):
         data = Track.parser.parse_args()
@@ -76,7 +76,7 @@ class Track(Resource):
     #     return item.json(), 201
 
 
-# class ItemList(Resource):
-#     def get(self):
-#         return {'items': [item.json() for item in ItemModel.query.all()]}
-        # return {'items': list(map(lambda x: x.json(), ItemModel.query.all()))}
+class Tracks(Resource):
+    # @jwt_required()
+    def get(self):
+        return {'tracks': [track.json() for track in TrackModel.query.all()]}
