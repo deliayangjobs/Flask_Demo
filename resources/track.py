@@ -19,11 +19,9 @@ class Track(Resource):
     parser.add_argument('playlist_id',
         type=int
     )
-    # parser.add_argument('store_id',
-    #     type=int,
-    #     required=True,
-    #     help="Every item needs a store id."
-    # )
+    parser.add_argument('source_id',
+        type=int
+    )
     #
     # @jwt_required()
     # def get(self, name):

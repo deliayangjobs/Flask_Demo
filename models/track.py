@@ -11,11 +11,11 @@ class TrackModel(db.Model):
     pix = db.Column(db.String(1000))
     link = db.Column(db.String(1000))
 
-    # playlist_id = db.Column(db.Integer, db.ForeignKey('playlist.id'))
-    # playlist = db.relationship('PlaylistModel')
+    playlist = db.Column(db.Integer, db.ForeignKey('playlists.id'))
+    playlistModel = db.relationship('PlaylistModel')
 
-    # source_id = db.Column(db.Integer, db.ForeignKey('source.id'))
-    # source = db.relationship('SourceModel')
+    source = db.Column(db.Integer, db.ForeignKey('sources.id'))
+    sourceModel = db.relationship('SourceModel')
 
     def __init__(self, options):
         self.name = options.name
@@ -24,20 +24,20 @@ class TrackModel(db.Model):
         self.status = 'ACTIVE'
         self.pix = ''
         self.link = ''
-        self.playlist_id = options.playlist_id
-        self.source_id = 0
-        # self.store_id = store_id
+        self.playlist = options.playlist_id
+        self.source = options.source_id
 
     def json(self):
-        return {'name':self.name, 'season':self.season, 'episode':self.episode, 'playlist_id':self.playlist_id}
+        return {'name':self.name, 'season':self.season, 'episode':self.episode, \
+                'playlist_id':self.playlist, 'source_id':self.source}
 
     def save_to_db(self):
         db.session.add(self)
         db.session.commit()
 
-    # def delete_from_db(self):
-    #     db.session.delete(self)
-    #     db.session.commit()
+    def delete_from_db(self):
+        db.session.delete(self)
+        db.session.commit()
 
     @classmethod
     def find_by_name(cls, name):

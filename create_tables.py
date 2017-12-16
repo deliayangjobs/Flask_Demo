@@ -25,8 +25,9 @@ cursor.execute(default_value)
 #tracks table
 create_table = "CREATE TABLE IF NOT EXISTS tracks ( \
     id INTEGER PRIMARY KEY, \
-    source int, name text, season int, episode int, status text, link text, pix text, \
-    playlist INTEGER, FOREIGN KEY(playlist) REFERENCES playlists(id))"
+    name text, season int, episode int, status text, link text, pix text, \
+    playlist INTEGER, source INTEGER, FOREIGN KEY(playlist) REFERENCES playlists(id), \
+    FOREIGN KEY(source) REFERENCES sources(id))"
 cursor.execute(create_table)
 
 conn.commit()
