@@ -27,6 +27,8 @@ jwt = JWT(app, authenticate, identity)
 
 api.add_resource(Store, '/store/<string:name>')
 api.add_resource(Item, '/item/<string:name>')
+api.add_resource(ItemList, '/items')
+api.add_resource(StoreList, '/stores')
 
 api.add_resource(Track, '/track', '/track/<int:track_id>')
 api.add_resource(Tracks, '/tracks')
@@ -37,8 +39,6 @@ api.add_resource(Playlists, '/playlists')
 api.add_resource(Source, '/source', '/source/<int:source_id>')
 api.add_resource(Sources, '/sources')
 
-api.add_resource(ItemList, '/items')
-api.add_resource(StoreList, '/stores')
 api.add_resource(UserRegister, '/register')
 
 @app.route('/')

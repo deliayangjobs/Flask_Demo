@@ -10,19 +10,33 @@ class UserRegister(Resource):
         required=True,
         help="This field cannot be blank"
     )
+    parser.add_argument('email',
+        type=str,
+        required=True,
+        help="This field cannot be blank"
+    )
     parser.add_argument('password',
         type=str,
         required=True,
         help="This field cannot be blank"
     )
+    parser.add_argument('firstname',
+        type=str
+    )
+    parser.add_argument('lastname',
+        type=str
+    )
 
     def post(self):
         data = UserRegister.parser.parse_args()
+        if UserModel.find_by_username(data.username):
+            return {'message':'An user with username "{}" already exists.'.format(data.username)}, 400
 
-        if UserModel.find_by_username(data['username']):
-            return {'message':"User already exists."}, 400
+        user = UserModel(data)
 
-        user = UserModel(**data)
-        user.save_to_db()
+        try:
+            user.save_to_db()
+        except:
+            return {"message":"An error occurred inserting the user."}, 500
 
-        return {"message":"User created successfully."}, 201
+        return user.json(), 201

@@ -4,12 +4,23 @@ class UserModel(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
+    #use email as username
     username = db.Column(db.String(80))
+    email = db.Column(db.String(80))
+    firstname = db.Column(db.String(80))
+    lastname = db.Column(db.String(80))
     password = db.Column(db.String(80))
 
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
+    def __init__(self, options):
+        self.username = options.username
+        self.password = options.password
+        self.firstname = options.firstname
+        self.lastname = options.lastname
+        self.email = options.email
+
+    def json(self):
+        return {'username':self.username, 'email':self.email, 'firstname':self.firstname, \
+                'lastname':self.lastname, 'userid':self.id}
 
     def save_to_db(self):
         db.session.add(self)
