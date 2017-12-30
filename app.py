@@ -39,7 +39,8 @@ api.add_resource(Playlists, '/playlists')
 api.add_resource(Source, '/source', '/source/<int:source_id>')
 api.add_resource(Sources, '/sources')
 
-api.add_resource(UserRegister, '/register')
+api.add_resource(UserRegister, '/register', '/profile/<int:user_id>')
+
 
 @app.route('/')
 def index():

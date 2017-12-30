@@ -40,3 +40,10 @@ class UserRegister(Resource):
             return {"message":"An error occurred inserting the user."}, 500
 
         return user.json(), 201
+
+    # @jwt_required()
+    def get(self, user_id):
+        user = UserModel.find_by_id(user_id)
+        if user:
+            return user.json()
+        return {'message':'User not found'}, 404
