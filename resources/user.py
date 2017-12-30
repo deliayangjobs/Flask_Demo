@@ -41,9 +41,19 @@ class UserRegister(Resource):
 
         return user.json(), 201
 
+
     # @jwt_required()
     def get(self, user_id):
         user = UserModel.find_by_id(user_id)
         if user:
             return user.json()
         return {'message':'User not found'}, 404
+
+
+    # @jwt_required()
+    def delete(self, user_id):
+        user = UserModel.find_by_id(user_id)
+        if user:
+            user.delete_from_db()
+
+        return {'message':'User deleted'}
