@@ -57,3 +57,28 @@ class UserRegister(Resource):
             user.delete_from_db()
 
         return {'message':'User deleted'}
+
+
+    # @jwt_required()
+    def put(self, user_id):
+        data = UserRegister.parser.parse_args()
+        user = UserModel.find_by_id(user_id)
+
+        if user is None:
+            user = UserModel(data)
+        else:
+            user.firstname = data['firstname']
+            user.lastname = data['lastname']
+            user.username = data['username']
+            user.email = data['email']
+            user.password = data['password']
+
+        user.save_to_db()
+
+        return user.json(), 201
+
+
+class Users(Resource):
+    # @jwt_required()
+    def get(self):
+        return {'users': [user.json() for user in UserModel.query.all()]}
