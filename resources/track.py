@@ -22,6 +22,9 @@ class Track(Resource):
     parser.add_argument('source_id',
         type=int
     )
+    parser.add_argument('user_id',
+        type=int
+    )
 
     # @jwt_required()
     def get(self, track_id):

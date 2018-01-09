@@ -17,6 +17,9 @@ class TrackModel(db.Model):
     source = db.Column(db.Integer, db.ForeignKey('sources.id'))
     sourceModel = db.relationship('SourceModel')
 
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    userModel = db.relationship('UserModel')
+
     def __init__(self, options):
         self.name = options.name
         self.season = options.season
@@ -26,10 +29,11 @@ class TrackModel(db.Model):
         self.link = ''
         self.playlist = options.playlist_id
         self.source = options.source_id
+        self.user_id = options.user_id
 
     def json(self):
         return {'name':self.name, 'season':self.season, 'episode':self.episode, \
-                'playlist_id':self.playlist, 'source_id':self.source}
+                'playlist_id':self.playlist, 'source_id':self.source, 'user_id':self.user_id}
 
     def save_to_db(self):
         db.session.add(self)
